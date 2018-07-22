@@ -15,6 +15,10 @@ type server struct {
 	names map[string]struct{}
 }
 
+const (
+	port = ":50051"
+)
+
 var (
 	empty = new(pb.Empty)
 )
@@ -44,10 +48,6 @@ func (s *server) AddUser(ctx context.Context, in *pb.User) (*pb.Empty, error) {
 	s.names[in.Name] = struct{}{}
 	return empty, nil
 }
-
-const (
-	port = ":8080"
-)
 
 func main() {
 	l, err := net.Listen("tcp", port)
