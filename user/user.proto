@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package user;
+// import "github.com/mwitkow/go-proto-validators/validator.proto";
+
+service UserService {
+  rpc GetUser (Name) returns (User) {}
+  rpc GetUsers (Empty) returns (Users) {}
+  rpc AddUser (User) returns (Empty) {}
+}
+
+message User {
+  string name = 1;
+  int32 age = 2;
+  string phone = 3;
+  string mail = 4;
+}
+
+message Name {
+  string name = 1;
+}
+
+message Empty {}
+
+message Users {
+  repeated User users = 1;
+}
