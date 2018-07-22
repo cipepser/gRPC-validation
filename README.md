@@ -190,6 +190,38 @@ func main() {
 [Golang ProtoBuf Validator Compiler](https://github.com/mwitkow/go-proto-validators)では、
 `[(validator.field) = {msg_exists : true}];`とすることで`required`を実現できるが、[proto3で廃止されたこと](https://developers.google.com/protocol-buffers/docs/proto)からも利用しない。
 
+### protobufの定義(validation後)
+
+```proto
+syntax = "proto3";
+
+package user;
+import "github.com/mwitkow/go-proto-validators/validator.proto";
+
+service UserService {
+  rpc GetUser (Name) returns (User) {}
+  rpc GetUsers (Empty) returns (Users) {}
+  rpc AddUser (User) returns (Empty) {}
+}
+
+message User {
+  string name = 1;
+  int32 age = 2 [(validator.field) = {int_gt: -1, int_lt: 151}];;
+  string phone = 3 [(validator.field) = {regex: "^(070|080|090)-\\d{4}-\\d{4}$"}];
+  string mail = 4 [(validator.field) = {regex: "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$"}];
+}
+
+message Name {
+  string name = 1;
+}
+
+message Empty {}
+
+message Users {
+  repeated User users = 1;
+}
+```
+
 ### コンパイル
 
 ```sh
