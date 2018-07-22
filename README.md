@@ -2,8 +2,15 @@
 
 [Golang ProtoBuf Validator Compiler](https://github.com/mwitkow/go-proto-validators)でprotobufのvalidationを行う。
 
+## インストール
 
-## go-proto-validatorのインストール
+### go-grpc-middlewareのインストール
+
+```sh
+❯ go get github.com/grpc-ecosystem/go-grpc-middleware
+```
+
+### go-proto-validatorのインストール
 
 ```sh
 ❯ go get github.com/mwitkow/go-proto-validators/protoc-gen-govalidators
@@ -64,6 +71,10 @@ var (
 	empty = new(pb.Empty)
 )
 
+const (
+	port = ":50051"
+)
+
 func (s *server) GetUser(ctx context.Context, in *pb.Name) (*pb.User, error) {
 	for u := range s.users {
 		if u.Name == in.Name {
@@ -89,10 +100,6 @@ func (s *server) AddUser(ctx context.Context, in *pb.User) (*pb.Empty, error) {
 	s.names[in.Name] = struct{}{}
 	return empty, nil
 }
-
-const (
-	port = ":8080"
-)
 
 func main() {
 	l, err := net.Listen("tcp", port)
@@ -127,7 +134,7 @@ import (
 
 const (
 	address = "localhost"
-	port    = ":8080"
+	port    = ":50051"
 )
 
 var (
@@ -173,3 +180,4 @@ func main() {
 ## References
 * [goのgRPCで便利ツールを使う](https://qiita.com/h3_poteto/items/3a39c41743b4fd87c134)
 * [Golang ProtoBuf Validator Compiler](https://github.com/mwitkow/go-proto-validators)
+* [よく使う正規表現はもうググりたくない！](https://qiita.com/dongri/items/2a0a18e253eb5bf9edba)
