@@ -11,7 +11,7 @@ import (
 
 const (
 	address = "localhost"
-	port    = ":8080"
+	port    = ":50051"
 )
 
 var (
