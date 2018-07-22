@@ -32,9 +32,9 @@ func main() {
 
 	u := pb.User{
 		Name:  "Bob",
-		Age:   24,
-		Phone: "",
-		Mail:  "",
+		Age:   20,
+		Phone: "090-1111-1111",
+		Mail:  "bob@example.com",
 	}
 
 	_, err = c.AddUser(context.Background(), &u)

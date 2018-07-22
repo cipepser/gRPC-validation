@@ -15,21 +15,21 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
-var _regex_User_Phone = regexp.MustCompile(`^(070|080|090)-¥d{4}-¥d{4}$`)
-var _regex_User_Mail = regexp.MustCompile(`^¥w+([-+.]¥w+)*@¥w+([-.]¥w+)*¥.¥w+([-.]¥w+)*$`)
+var _regex_User_Phone = regexp.MustCompile(`^(070|080|090)-\d{4}-\d{4}$`)
+var _regex_User_Mail = regexp.MustCompile(`^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$`)
 
 func (this *User) Validate() error {
-	if !(this.Age > 0) {
-		return github_com_mwitkow_go_proto_validators.FieldError("Age", fmt.Errorf(`value '%v' must be greater than '0'`, this.Age))
+	if !(this.Age > -1) {
+		return github_com_mwitkow_go_proto_validators.FieldError("Age", fmt.Errorf(`value '%v' must be greater than '-1'`, this.Age))
 	}
-	if !(this.Age < 150) {
-		return github_com_mwitkow_go_proto_validators.FieldError("Age", fmt.Errorf(`value '%v' must be less than '150'`, this.Age))
+	if !(this.Age < 151) {
+		return github_com_mwitkow_go_proto_validators.FieldError("Age", fmt.Errorf(`value '%v' must be less than '151'`, this.Age))
 	}
 	if !_regex_User_Phone.MatchString(this.Phone) {
-		return github_com_mwitkow_go_proto_validators.FieldError("Phone", fmt.Errorf(`value '%v' must be a string conforming to regex "^(070|080|090)-¥d{4}-¥d{4}$"`, this.Phone))
+		return github_com_mwitkow_go_proto_validators.FieldError("Phone", fmt.Errorf(`value '%v' must be a string conforming to regex "^(070|080|090)-\\d{4}-\\d{4}$"`, this.Phone))
 	}
 	if !_regex_User_Mail.MatchString(this.Mail) {
-		return github_com_mwitkow_go_proto_validators.FieldError("Mail", fmt.Errorf(`value '%v' must be a string conforming to regex "^¥w+([-+.]¥w+)*@¥w+([-.]¥w+)*¥.¥w+([-.]¥w+)*$"`, this.Mail))
+		return github_com_mwitkow_go_proto_validators.FieldError("Mail", fmt.Errorf(`value '%v' must be a string conforming to regex "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$"`, this.Mail))
 	}
 	return nil
 }

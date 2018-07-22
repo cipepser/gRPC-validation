@@ -7,6 +7,8 @@ import (
 	"net"
 
 	pb "github.com/cipepser/gRPC-validation/user"
+	"github.com/grpc-ecosystem/go-grpc-middleware"
+	"github.com/grpc-ecosystem/go-grpc-middleware/validator"
 	"google.golang.org/grpc"
 )
 
@@ -55,7 +57,14 @@ func main() {
 		log.Fatalf("failed to listen: %v", err)
 	}
 
-	s := grpc.NewServer()
+	s := grpc.NewServer(
+		grpc.StreamInterceptor(grpc_middleware.ChainStreamServer(
+			grpc_validator.StreamServerInterceptor(),
+		)),
+		grpc.UnaryInterceptor(grpc_middleware.ChainUnaryServer(
+			grpc_validator.UnaryServerInterceptor(),
+		)),
+	)
 	pb.RegisterUserServiceServer(s,
 		&server{
 			users: map[*pb.User]struct{}{},
