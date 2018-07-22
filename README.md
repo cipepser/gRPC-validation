@@ -175,7 +175,30 @@ func main() {
 	}
 }
 ```
+## validation
 
+### 仕様
+
+|  フィールド | 制約 |
+|  ------ | ------ |
+|  name | required |
+|  age | 0〜150歳 |
+|  phone | 携帯電話の正規表現にマッチ |
+|  mail | メールアドレスの正規表現にマッチ |
+
+正規表現の正確さは難易度が高いので今回は、[よく使う正規表現はもうググりたくない！](https://qiita.com/dongri/items/2a0a18e253eb5bf9edba)を利用。
+
+### コンパイル
+
+```sh
+❯ cd user
+❯ protoc  \
+  --proto_path=${GOPATH}/src \
+	--proto_path=. \
+	--go_out=plugins=grpc:./ \
+	--govalidators_out=./ \
+	*.proto
+```
 
 ## References
 * [goのgRPCで便利ツールを使う](https://qiita.com/h3_poteto/items/3a39c41743b4fd87c134)
